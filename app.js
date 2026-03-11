@@ -7,6 +7,7 @@ const CONFIG = {
 // State
 let isListening = false;
 let currentMode = 'EN_TO_FI'; // Default: English to Finnish
+let debounceTimer;
 
 // DOM Elements
 const micBtn = document.getElementById('mic-btn');
@@ -69,11 +70,11 @@ if (SpeechRecognition) {
         }
 
         if (finalTranscript) {
-            inputText.textContent = finalTranscript;
+            inputText.value = finalTranscript;
             liveSubtitle.textContent = finalTranscript;
             translateText(finalTranscript);
         } else if (interimTranscript) {
-            inputText.textContent = interimTranscript;
+            inputText.value = interimTranscript;
             liveSubtitle.textContent = interimTranscript;
         }
     };
@@ -133,6 +134,11 @@ toggle.addEventListener('change', () => {
     currentMode = toggle.checked ? 'FI_TO_EN' : 'EN_TO_FI';
     updateLabels();
 
+    // Re-translate current text if present
+    if (inputText.value.trim()) {
+        translateText(inputText.value);
+    }
+
     // If we're listening, restart recognition with new language
     if (isListening) {
         recognition.stop();
@@ -160,6 +166,25 @@ function updateLabels() {
 function updateRecognitionLang() {
     recognition.lang = currentMode === 'EN_TO_FI' ? CONFIG.EN.code : CONFIG.FI.code;
 }
+
+// Text Input Handler
+inputText.addEventListener('input', (e) => {
+    const text = e.target.value;
+    
+    // Clear existing timer
+    clearTimeout(debounceTimer);
+    
+    if (!text.trim()) {
+        outputText.textContent = "...";
+        liveSubtitle.textContent = "Waiting for input...";
+        return;
+    }
+
+    // Debounce translation calls (wait 500ms after user stops typing)
+    debounceTimer = setTimeout(() => {
+        translateText(text);
+    }, 500);
+});
 
 // Initialize Labels
 updateLabels();

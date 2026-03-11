@@ -4,6 +4,9 @@
 
 A premium, high-aesthetic voice translator built with modern web technologies. This application allows real-time speech-to-text translation between English and Finnish.
 
+## 🔗 Live Demo
+[View Live Application](https://animusehsan-sketch.github.io/translation-app/)
+
 ## 🚀 Features
 
 - **Live Voice Input**: Real-time transcription using the Web Speech API.
