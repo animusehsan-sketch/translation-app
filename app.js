@@ -25,6 +25,8 @@ const speakOutputBtn = document.getElementById('speak-output');
 const clearBtn = document.getElementById('clear-btn');
 const autoSpeakToggle = document.getElementById('auto-speak');
 const pronunciationText = document.getElementById('pronunciation-text');
+const conversationList = document.getElementById('conversation-list');
+const clearHistoryBtn = document.getElementById('clear-history-btn');
 const webcamElement = document.getElementById('webcam');
 const liveSubtitle = document.getElementById('live-subtitle');
 
@@ -122,6 +124,9 @@ async function translateText(text) {
             
             // Handle Transliteration for RU and FA
             updateTransliteration(translation, destLang);
+
+            // Add to Conversation History
+            addToHistory(text, translation, srcSelect.value, destSelect.value);
 
             // Auto-speak if enabled
             if (autoSpeakToggle.checked) {
@@ -245,6 +250,60 @@ function transliterateRussian(text) {
     };
     return text.toLowerCase().split('').map(char => map[char] || char).join('');
 }
+
+// Conversation History Management
+function addToHistory(original, translated, from, to) {
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const historyItem = {
+        original,
+        translated,
+        from: CONFIG[from].name,
+        to: CONFIG[to].name,
+        timestamp,
+        rtl: to === 'FA'
+    };
+
+    // Save to LocalStorage
+    let history = JSON.parse(localStorage.getItem('trans_history') || '[]');
+    history.unshift(historyItem); // Add to beginning
+    localStorage.setItem('trans_history', JSON.stringify(history.slice(0, 50))); // Keep last 50
+
+    renderHistory();
+}
+
+function renderHistory() {
+    const history = JSON.parse(localStorage.getItem('trans_history') || '[]');
+    
+    if (history.length === 0) {
+        conversationList.innerHTML = '<div class="empty-state">Your translated conversations will appear here...</div>';
+        return;
+    }
+
+    conversationList.innerHTML = history.map(item => `
+        <div class="chat-item">
+            <div class="chat-meta">
+                <span>${item.from}</span>
+                <span>${item.timestamp}</span>
+            </div>
+            <div class="chat-bubble original">${item.original}</div>
+            <div class="chat-meta">
+                <span></span>
+                <span>${item.to}</span>
+            </div>
+            <div class="chat-bubble translated ${item.rtl ? 'rtl-text' : ''}">${item.translated}</div>
+        </div>
+    `).join('');
+}
+
+clearHistoryBtn.addEventListener('click', () => {
+    if (confirm("Clear all conversation history?")) {
+        localStorage.removeItem('trans_history');
+        renderHistory();
+    }
+});
+
+// Initial History Load
+renderHistory();
 
 // Initial RTL check
 updateRTL();
