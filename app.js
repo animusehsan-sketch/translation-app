@@ -16,6 +16,21 @@ const outputText = document.getElementById('output-text');
 const toggle = document.getElementById('direction-toggle');
 const langSrcLabel = document.getElementById('lang-src');
 const langDestLabel = document.getElementById('lang-dest');
+const webcamElement = document.getElementById('webcam');
+const liveSubtitle = document.getElementById('live-subtitle');
+
+// Initialize Webcam
+async function initWebcam() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        webcamElement.srcObject = stream;
+    } catch (err) {
+        console.error("Error accessing webcam: ", err);
+        liveSubtitle.textContent = "Webcam access denied";
+    }
+}
+
+initWebcam();
 
 // Initialize Speech Recognition
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -55,9 +70,11 @@ if (SpeechRecognition) {
 
         if (finalTranscript) {
             inputText.textContent = finalTranscript;
+            liveSubtitle.textContent = finalTranscript;
             translateText(finalTranscript);
         } else if (interimTranscript) {
             inputText.textContent = interimTranscript;
+            liveSubtitle.textContent = interimTranscript;
         }
     };
 
@@ -87,7 +104,9 @@ async function translateText(text) {
         const data = await response.json();
 
         if (data.responseData && data.responseData.translatedText) {
-            outputText.textContent = data.responseData.translatedText;
+            const translation = data.responseData.translatedText;
+            outputText.textContent = translation;
+            liveSubtitle.textContent = translation; // Show translation as subtitle
         } else {
             outputText.textContent = "Translation error. Please try again.";
         }
