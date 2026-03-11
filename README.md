@@ -1,4 +1,4 @@
-# Flux Translate | Real-time Voice Translator
+# Ehsan App | Real-time Voice Translator
 
 ![Flux Translate Mockup](https://raw.githubusercontent.com/animusehsan-sketch/translation-app/main/assets/mockup.png)
 
