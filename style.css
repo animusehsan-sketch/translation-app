@@ -310,6 +310,42 @@ h1 span {
     font-size: 0.9rem;
 }
 
+.extra-controls {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.auto-speak-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    background: rgba(46, 125, 50, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.auto-speak-toggle:hover {
+    background: rgba(46, 125, 50, 0.1);
+}
+
+.auto-speak-toggle input {
+    accent-color: var(--accent-primary);
+}
+
+.pronunciation-hint {
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    margin-top: 0.5rem;
+    font-style: italic;
+    min-height: 1.2rem;
+}
+
 /* Display Areas */
 .translation-display {
     display: flex;

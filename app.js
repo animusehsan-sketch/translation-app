@@ -23,6 +23,8 @@ const swapBtn = document.getElementById('swap-btn');
 const speakInputBtn = document.getElementById('speak-input');
 const speakOutputBtn = document.getElementById('speak-output');
 const clearBtn = document.getElementById('clear-btn');
+const autoSpeakToggle = document.getElementById('auto-speak');
+const pronunciationText = document.getElementById('pronunciation-text');
 const webcamElement = document.getElementById('webcam');
 const liveSubtitle = document.getElementById('live-subtitle');
 
@@ -117,6 +119,14 @@ async function translateText(text) {
             const translation = data.responseData.translatedText;
             outputText.textContent = translation;
             liveSubtitle.textContent = translation; // Show translation as subtitle
+            
+            // Handle Transliteration for RU and FA
+            updateTransliteration(translation, destLang);
+
+            // Auto-speak if enabled
+            if (autoSpeakToggle.checked) {
+                speak(translation, CONFIG[destSelect.value].code);
+            }
         } else {
             outputText.textContent = "Translation error. Please try again.";
         }
@@ -214,8 +224,27 @@ speakOutputBtn.addEventListener('click', () => {
 clearBtn.addEventListener('click', () => {
     inputText.value = "";
     outputText.textContent = "...";
+    pronunciationText.textContent = "";
     liveSubtitle.textContent = "Waiting for input...";
 });
+
+// Transliteration Helpers
+function updateTransliteration(text, lang) {
+    if (lang === 'ru') {
+        pronunciationText.textContent = `Pronunciation: ${transliterateRussian(text)}`;
+    } else if (lang === 'fa') {
+        pronunciationText.textContent = "Persian Transliteration (Simplified)"; // Placeholder as FA translit is complex
+    } else {
+        pronunciationText.textContent = "";
+    }
+}
+
+function transliterateRussian(text) {
+    const map = {
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'j', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya'
+    };
+    return text.toLowerCase().split('').map(char => map[char] || char).join('');
+}
 
 // Initial RTL check
 updateRTL();
