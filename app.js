@@ -2,7 +2,8 @@
 const CONFIG = {
     EN: { code: 'en-US', lang: 'en', name: 'English' },
     FI: { code: 'fi-FI', lang: 'fi', name: 'Finnish' },
-    FA: { code: 'fa-IR', lang: 'fa', name: 'Persian' }
+    FA: { code: 'fa-IR', lang: 'fa', name: 'Persian' },
+    DE: { code: 'de-DE', lang: 'de', name: 'German' }
 };
 
 // State
