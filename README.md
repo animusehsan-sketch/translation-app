@@ -9,7 +9,7 @@ A premium, high-aesthetic voice and text translator built with modern web techno
 
 ## 🚀 Features
 
-- **Multi-language Support**: Translate between English, Finnish, Persian, and German.
+- **Multi-language Support**: Translate between English, Finnish, Persian, German, and Russian.
 - **Auto RTL Detection**: Seamlessly switches text direction for Persian (RTL).
 - **Live Voice Input**: Real-time transcription using the Web Speech API.
 - **Text Input Support**: Manually type or paste text for instant translation.
