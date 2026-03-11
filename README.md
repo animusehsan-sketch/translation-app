@@ -16,6 +16,7 @@ A premium, high-aesthetic voice and text translator built with modern web techno
 - **Swap Languages**: Quickly swap source and destination with a single click.
 - **Speak & Listen**: High-quality Text-to-Speech for all supported languages.
 - **Conversation History**: Persistently save your translated chats in a chat-like interface.
+- **Document Translation**: Upload PDF or Word (.docx) files for automatic text extraction and translation.
 - **Ultra-low Latency**: Interim results allow you to see your speech as you talk.
 - **Premium Design**: Dark mode interface with glassmorphism, glowing spheres, and smooth micro-animations.
 - **Responsive**: Fully optimized for mobile and desktop browsers.

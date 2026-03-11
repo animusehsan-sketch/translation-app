@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- File Parsing Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
 
 <body>
@@ -85,6 +88,15 @@
                         <input type="checkbox" id="auto-speak">
                         <span class="toggle-label">Auto-Speak Translation</span>
                     </label>
+                </div>
+
+                <div class="file-upload-section">
+                    <input type="file" id="file-input" accept=".pdf,.docx" hidden>
+                    <button id="upload-btn" class="upload-button">
+                        <span class="icon">📄</span>
+                        <span>Translate PDF/Word</span>
+                    </button>
+                    <div id="file-status" class="file-status"></div>
                 </div>
             </div>
 
