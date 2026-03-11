@@ -18,6 +18,9 @@ const outputText = document.getElementById('output-text');
 const srcSelect = document.getElementById('source-lang-select');
 const destSelect = document.getElementById('dest-lang-select');
 const swapBtn = document.getElementById('swap-btn');
+const speakInputBtn = document.getElementById('speak-input');
+const speakOutputBtn = document.getElementById('speak-output');
+const clearBtn = document.getElementById('clear-btn');
 const webcamElement = document.getElementById('webcam');
 const liveSubtitle = document.getElementById('live-subtitle');
 
@@ -185,6 +188,32 @@ function updateRTL() {
 function updateRecognitionLang() {
     recognition.lang = CONFIG[srcSelect.value].code;
 }
+
+// Text-to-Speech
+function speak(text, langCode) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = langCode;
+    window.speechSynthesis.speak(utterance);
+}
+
+// Action Button Listeners
+speakInputBtn.addEventListener('click', () => {
+    const text = inputText.value;
+    if (text) speak(text, CONFIG[srcSelect.value].code);
+});
+
+speakOutputBtn.addEventListener('click', () => {
+    const text = outputText.textContent;
+    if (text && text !== "...") speak(text, CONFIG[destSelect.value].code);
+});
+
+clearBtn.addEventListener('click', () => {
+    inputText.value = "";
+    outputText.textContent = "...";
+    liveSubtitle.textContent = "Waiting for input...";
+});
 
 // Initial RTL check
 updateRTL();

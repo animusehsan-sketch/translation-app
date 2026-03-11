@@ -80,7 +80,13 @@
 
             <div class="translation-display">
                 <div class="text-block original">
-                    <label>Input Text</label>
+                    <div class="block-header">
+                        <label>Input Text</label>
+                        <div class="actions">
+                            <button id="clear-btn" class="action-btn" title="Clear Text">✕</button>
+                            <button id="speak-input" class="action-btn" title="Listen">🔊</button>
+                        </div>
+                    </div>
                     <textarea id="input-text" class="content-area" placeholder="Type or speak something..."></textarea>
                 </div>
                 <div class="divider">
@@ -89,7 +95,12 @@
                     <div class="line"></div>
                 </div>
                 <div class="text-block translated">
-                    <label>Translation</label>
+                    <div class="block-header">
+                        <label>Translation</label>
+                        <div class="actions">
+                            <button id="speak-output" class="action-btn" title="Listen">🔊</button>
+                        </div>
+                    </div>
                     <div id="output-text" class="content-area">...</div>
                 </div>
             </div>
