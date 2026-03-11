@@ -34,13 +34,31 @@
                     <div id="live-subtitle" class="subtitle-overlay">Waiting for speech...</div>
                 </div>
 
-                <div class="mode-switch">
-                    <span class="lang-label" id="lang-src">English</span>
-                    <label class="switch">
-                        <input type="checkbox" id="direction-toggle">
-                        <span class="slider round"></span>
-                    </label>
-                    <span class="lang-label" id="lang-dest">Finnish</span>
+                <div class="language-selection">
+                    <div class="lang-group">
+                        <label>From</label>
+                        <select id="source-lang-select" class="lang-dropdown">
+                            <option value="EN">English</option>
+                            <option value="FI">Finnish</option>
+                            <option value="FA">Persian</option>
+                        </select>
+                    </div>
+                    
+                    <button id="swap-btn" class="swap-button" title="Swap Languages">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17 14L12 9L7 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <div class="lang-group">
+                        <label>To</label>
+                        <select id="dest-lang-select" class="lang-dropdown">
+                            <option value="EN">English</option>
+                            <option value="FI" selected>Finnish</option>
+                            <option value="FA">Persian</option>
+                        </select>
+                    </div>
                 </div>
 
                 <button id="mic-btn" class="mic-button">

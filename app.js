@@ -1,7 +1,8 @@
 // Configuration
 const CONFIG = {
-    EN: { code: 'en-US', lang: 'en' },
-    FI: { code: 'fi-FI', lang: 'fi' }
+    EN: { code: 'en-US', lang: 'en', name: 'English' },
+    FI: { code: 'fi-FI', lang: 'fi', name: 'Finnish' },
+    FA: { code: 'fa-IR', lang: 'fa', name: 'Persian' }
 };
 
 // State
@@ -14,9 +15,9 @@ const micBtn = document.getElementById('mic-btn');
 const statusText = document.getElementById('status-text');
 const inputText = document.getElementById('input-text');
 const outputText = document.getElementById('output-text');
-const toggle = document.getElementById('direction-toggle');
-const langSrcLabel = document.getElementById('lang-src');
-const langDestLabel = document.getElementById('lang-dest');
+const srcSelect = document.getElementById('source-lang-select');
+const destSelect = document.getElementById('dest-lang-select');
+const swapBtn = document.getElementById('swap-btn');
 const webcamElement = document.getElementById('webcam');
 const liveSubtitle = document.getElementById('live-subtitle');
 
@@ -92,8 +93,11 @@ if (SpeechRecognition) {
 
 // Translation Function
 async function translateText(text) {
-    const srcLang = currentMode === 'EN_TO_FI' ? CONFIG.EN.lang : CONFIG.FI.lang;
-    const destLang = currentMode === 'EN_TO_FI' ? CONFIG.FI.lang : CONFIG.EN.lang;
+    const srcLang = CONFIG[srcSelect.value].lang;
+    const destLang = CONFIG[destSelect.value].lang;
+
+    // Handle RTL
+    updateRTL();
 
     try {
         outputText.textContent = "Translating...";
@@ -130,10 +134,24 @@ micBtn.addEventListener('click', () => {
     }
 });
 
-toggle.addEventListener('change', () => {
-    currentMode = toggle.checked ? 'FI_TO_EN' : 'EN_TO_FI';
-    updateLabels();
+srcSelect.addEventListener('change', () => {
+    handleLanguageChange();
+});
 
+destSelect.addEventListener('change', () => {
+    handleLanguageChange();
+});
+
+swapBtn.addEventListener('click', () => {
+    const temp = srcSelect.value;
+    srcSelect.value = destSelect.value;
+    destSelect.value = temp;
+    handleLanguageChange();
+});
+
+function handleLanguageChange() {
+    updateRTL();
+    
     // Re-translate current text if present
     if (inputText.value.trim()) {
         translateText(inputText.value);
@@ -147,27 +165,29 @@ toggle.addEventListener('change', () => {
             recognition.start();
         }, 100);
     }
-});
+}
 
-function updateLabels() {
-    if (currentMode === 'EN_TO_FI') {
-        langSrcLabel.textContent = "English";
-        langDestLabel.textContent = "Finnish";
-        langSrcLabel.classList.add('active');
-        langDestLabel.classList.remove('active');
+function updateRTL() {
+    // Add RTL class if the language is Persian
+    if (srcSelect.value === 'FA') {
+        inputText.classList.add('rtl-text');
     } else {
-        langSrcLabel.textContent = "Finnish";
-        langDestLabel.textContent = "English";
-        langSrcLabel.classList.remove('active');
-        langDestLabel.classList.add('active');
+        inputText.classList.remove('rtl-text');
+    }
+
+    if (destSelect.value === 'FA') {
+        outputText.classList.add('rtl-text');
+    } else {
+        outputText.classList.remove('rtl-text');
     }
 }
 
 function updateRecognitionLang() {
-    recognition.lang = currentMode === 'EN_TO_FI' ? CONFIG.EN.code : CONFIG.FI.code;
+    recognition.lang = CONFIG[srcSelect.value].code;
 }
 
-// Text Input Handler
+// Initial RTL check
+updateRTL();
 inputText.addEventListener('input', (e) => {
     const text = e.target.value;
     

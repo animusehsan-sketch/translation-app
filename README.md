@@ -2,16 +2,18 @@
 
 ![Flux Translate Mockup](https://raw.githubusercontent.com/animusehsan-sketch/translation-app/main/assets/mockup.png)
 
-A premium, high-aesthetic voice translator built with modern web technologies. This application allows real-time speech-to-text translation between English and Finnish.
+A premium, high-aesthetic voice and text translator built with modern web technologies. This application allows real-time translation between English, Finnish, and Persian (Farsi).
 
 ## 🔗 Live Demo
 [View Live Application](https://animusehsan-sketch.github.io/translation-app/)
 
 ## 🚀 Features
 
+- **Multi-language Support**: Translate between English, Finnish, and Persian.
+- **Auto RTL Detection**: Seamlessly switches text direction for Persian (RTL).
 - **Live Voice Input**: Real-time transcription using the Web Speech API.
 - **Text Input Support**: Manually type or paste text for instant translation.
-- **Bi-directional Translation**: Toggle seamlessly between English → Finnish and Finnish → English.
+- **Swap Languages**: Quickly swap source and destination with a single click.
 - **Ultra-low Latency**: Interim results allow you to see your speech as you talk.
 - **Premium Design**: Dark mode interface with glassmorphism, glowing spheres, and smooth micro-animations.
 - **Responsive**: Fully optimized for mobile and desktop browsers.
