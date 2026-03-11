@@ -10,6 +10,7 @@ A premium, high-aesthetic voice translator built with modern web technologies. T
 ## 🚀 Features
 
 - **Live Voice Input**: Real-time transcription using the Web Speech API.
+- **Text Input Support**: Manually type or paste text for instant translation.
 - **Bi-directional Translation**: Toggle seamlessly between English → Finnish and Finnish → English.
 - **Ultra-low Latency**: Interim results allow you to see your speech as you talk.
 - **Premium Design**: Dark mode interface with glassmorphism, glowing spheres, and smooth micro-animations.
